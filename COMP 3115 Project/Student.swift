@@ -22,6 +22,7 @@ class Student: NSObject {
         self.progression = progression
     }
     
+    // Default initializer
     override init() {
         self.name = "name"
         self.year = "year"

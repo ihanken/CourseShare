@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		853416EA1C7E0A03000A1974 /* Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853416E91C7E0A03000A1974 /* Class.swift */; };
+		853416EC1C7E0C62000A1974 /* ComputerScience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853416EB1C7E0C62000A1974 /* ComputerScience.swift */; };
 		85A8742F1C62656300C892FF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A8742E1C62656300C892FF /* AppDelegate.swift */; };
 		85A874311C62656300C892FF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A874301C62656300C892FF /* ViewController.swift */; };
 		85A874341C62656300C892FF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85A874321C62656300C892FF /* Main.storyboard */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		853416E91C7E0A03000A1974 /* Class.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Class.swift; sourceTree = "<group>"; };
+		853416EB1C7E0C62000A1974 /* ComputerScience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComputerScience.swift; sourceTree = "<group>"; };
 		85A8742B1C62656300C892FF /* CourseShare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CourseShare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85A8742E1C62656300C892FF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85A874301C62656300C892FF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -80,6 +84,8 @@
 			children = (
 				85A874441C6266B800C892FF /* HomeModel.swift */,
 				85A874461C6266E100C892FF /* Student.swift */,
+				853416E91C7E0A03000A1974 /* Class.swift */,
+				853416EB1C7E0C62000A1974 /* ComputerScience.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -173,7 +179,9 @@
 				85A874311C62656300C892FF /* ViewController.swift in Sources */,
 				85A8742F1C62656300C892FF /* AppDelegate.swift in Sources */,
 				85A874451C6266B800C892FF /* HomeModel.swift in Sources */,
+				853416EC1C7E0C62000A1974 /* ComputerScience.swift in Sources */,
 				85A874471C6266E100C892FF /* Student.swift in Sources */,
+				853416EA1C7E0A03000A1974 /* Class.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

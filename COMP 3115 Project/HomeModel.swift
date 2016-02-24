@@ -21,19 +21,15 @@ class HomeModel: NSObject, HomeModelProtocol, NSURLConnectionDataDelegate {
     var delegate: HomeModelProtocol? = nil
     
     func itemsDownloaded(items: NSArray) {
-        
+        // Must initialize function to adhere to protocol.
     }
     
+    // Download all students from the database.
     func downloadItems() {
         downloadedData = NSMutableData()
         
-        // Download the json file
+        // Download the json file.
         let jsonFileUrl = NSURL(string: "http://localhost/~ihanken/service.php")
-        
-        // Create the reques
-        let urlRequest = NSURLRequest(URL: jsonFileUrl!)
-        
-        print("URLRequest: \(urlRequest)")
         
         let session = NSURLSession.sharedSession()
         
@@ -50,9 +46,7 @@ class HomeModel: NSObject, HomeModelProtocol, NSURLConnectionDataDelegate {
                     let students = NSMutableArray()
                     var jsonArray: NSArray = NSArray()
                     
-                    print(self.downloadedData)
-                    
-                    // Parse the JSON that came in
+                    // Parse the JSON that came in.
                     do {
                         jsonArray = try NSJSONSerialization.JSONObjectWithData(self.downloadedData, options: NSJSONReadingOptions.AllowFragments) as! NSArray
                     }
@@ -60,23 +54,23 @@ class HomeModel: NSObject, HomeModelProtocol, NSURLConnectionDataDelegate {
                         print("Error: \(error)")
                     }
                     
-                    // Loop through Json objects, create question objects and add them to our questions array
+                    // Loop through Json objects, create question objects and add them to our questions array.
                     for i in 0..<jsonArray.count {
                         let jsonElement: NSDictionary = jsonArray[i] as! NSDictionary
                         
-                        // Create a new location object and set its props to JsonElement properties
+                        // Create a new location object and set its properties to JsonElement properties.
                         let newStudent = Student();
                         newStudent.name = jsonElement["Name"] as! NSString
                         newStudent.year = jsonElement["Year"] as! NSString
                         newStudent.majors = jsonElement["Majors"] as! NSString
                         newStudent.progression = jsonElement["Progression"] as! NSString
                         
-                        // Add this question to the locations array
+                        // Add this student to the locations array.
                         print("Student Name: \(newStudent.name)")
                         students.addObject(newStudent)
                     }
                     
-                    // Ready to notify delegate that data is ready and pass back items
+                    // Ready to notify delegate that data is ready and pass back items.
                     print("Students: \(students)")
                     
                     self.delegate?.itemsDownloaded(students)
@@ -95,7 +89,6 @@ class HomeModel: NSObject, HomeModelProtocol, NSURLConnectionDataDelegate {
     }
     
     func connection(connection: NSURLConnection, didReceiveData data: NSData) {
-        print(data)
         downloadedData.appendData(data)
     }
     
