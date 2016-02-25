@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, HomeModelProtocol {
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, HomeModelProtocol {
     
     var feedItems = NSArray()
     var homeModel = HomeModel()
@@ -31,14 +31,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let dataTask = defaultSession.dataTaskWithRequest(urlRequest, completionHandler: {(data, response, error) in
             
             let urlContent = NSString(data: data!, encoding: NSUTF8StringEncoding) as NSString!
-            print("Data: \(urlContent)");
             
             var json: NSDictionary
             
             do {
-                print("Trying serialization.")
                 json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
-                print("Past serialization.")
                 let status = json["status"] as! NSString
                 
                 if status == "1" {
@@ -86,7 +83,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(feedItems.count)
         return feedItems.count
     }
     

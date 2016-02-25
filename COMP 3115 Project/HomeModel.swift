@@ -39,7 +39,6 @@ class HomeModel: NSObject, HomeModelProtocol, NSURLConnectionDataDelegate {
             }
             else if data != nil {
                 if let str = NSString(data: data!, encoding: NSUTF8StringEncoding) {
-                    print("Received data:\n\(str)")
                     self.downloadedData.appendData(data!)
                     
                     // Create an array to store the locations
@@ -66,12 +65,10 @@ class HomeModel: NSObject, HomeModelProtocol, NSURLConnectionDataDelegate {
                         newStudent.progression = jsonElement["Progression"] as! NSString
                         
                         // Add this student to the locations array.
-                        print("Student Name: \(newStudent.name)")
                         students.addObject(newStudent)
                     }
                     
                     // Ready to notify delegate that data is ready and pass back items.
-                    print("Students: \(students)")
                     
                     self.delegate?.itemsDownloaded(students)
                 }
