@@ -12,48 +12,16 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var feedItems = NSArray()
     var homeModel = HomeModel()
+    
+    @IBAction func unwindToMainViewController (sender: UIStoryboardSegue){
+        
+    }
 
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var newUserButton: UIButton!
     
     @IBAction func newUserButtonPressed(sender: AnyObject) {
-        
-        let url = NSURL(string: "http://localhost/~ihanken/phpWrite.php")
-        let urlRequest = NSMutableURLRequest(URL: url!)
-        urlRequest.HTTPMethod = "POST"
-        
-        let noteDataString = NSString(format: "name=%@&year=%@&majors=%@&progression=%@", "Test", "Freshman", "Computer Engineering", "Test")
-        urlRequest.HTTPBody = noteDataString.dataUsingEncoding(NSUTF8StringEncoding)
-
-        let defaultSession = NSURLSession.sharedSession()
-        
-        let dataTask = defaultSession.dataTaskWithRequest(urlRequest, completionHandler: {(data, response, error) in
-            
-            let urlContent = NSString(data: data!, encoding: NSUTF8StringEncoding) as NSString!
-            
-            var json: NSDictionary
-            
-            do {
-                json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
-                let status = json["status"] as! NSString
-                
-                if status == "1" {
-                    // Reload the table view
-                    self.homeModel.downloadItems()
-                }
-                else {
-                    print("Error when trying to write.")
-                }
-            }
-            catch {
-                print("This is the caught error")
-                print("Error: \(error)")
-            }
-            
-        });
-        
-        dataTask.resume()
     }
     
     override func viewDidLoad() {

@@ -9,11 +9,22 @@
 import Foundation
 import UIKit
 
+protocol ClassCellDelegate: class {
+    func didChangeSwitchState(sender: ClassCell, isOn: Bool)
+}
+
 class ClassCell: UITableViewCell {
     
     @IBOutlet weak var className: UILabel!
     @IBOutlet weak var classID: UILabel!
     @IBOutlet weak var classSwitch: UISwitch!
+    
+    weak var cellDelegate: ClassCellDelegate?
+    
+    @IBAction func handledSwitchChange(sender: UISwitch) {
+        self.cellDelegate?.didChangeSwitchState(self, isOn: classSwitch.on)
+        print("Switch changed.")
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

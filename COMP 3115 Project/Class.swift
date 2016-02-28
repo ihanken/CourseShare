@@ -8,11 +8,12 @@
 
 import Foundation
 
-class Class {
+class Class: CustomStringConvertible {
     // Class Identifiers
     let className: String
     let classDept: String
     let classID: Int
+    var selected: Bool
     
     // Prerequisites
     let prereq1: Class?
@@ -20,6 +21,10 @@ class Class {
     let prereq3: Class?
     let prereq4: Class?
     let prereq5: Class?
+    
+    var description: String {
+        return "\(classDept) \(classID)"
+    }
     
     func listPrerequisites() {
         if prereq1 == nil {
@@ -47,6 +52,7 @@ class Class {
         self.className = className
         self.classDept = classDept
         self.classID = classID
+        self.selected = false
         self.prereq1 = nil
         self.prereq2 = nil
         self.prereq3 = nil
@@ -58,6 +64,7 @@ class Class {
         self.className = className
         self.classDept = classDept
         self.classID = classID
+        self.selected = false
         self.prereq1 = prereq1
         self.prereq2 = prereq2
         self.prereq3 = prereq3
@@ -70,6 +77,7 @@ class Class {
         self.className = "className"
         self.classDept = "classDept"
         self.classID = -1
+        self.selected = false
         self.prereq1 = nil
         self.prereq2 = nil
         self.prereq3 = nil

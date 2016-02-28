@@ -38,7 +38,7 @@ class HomeModel: NSObject, HomeModelProtocol, NSURLConnectionDataDelegate {
                 print("error: \(error!.localizedDescription): \(error!.userInfo)")
             }
             else if data != nil {
-                if let str = NSString(data: data!, encoding: NSUTF8StringEncoding) {
+                if let _ = NSString(data: data!, encoding: NSUTF8StringEncoding) {
                     self.downloadedData.appendData(data!)
                     
                     // Create an array to store the locations
