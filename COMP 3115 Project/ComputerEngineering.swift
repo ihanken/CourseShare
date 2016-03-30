@@ -1,5 +1,5 @@
 //
-//  ElectricalEngineering.swift
+//  ComputerEngineering.swift
 //  CourseShare
 //
 //  Created by Ian Hanken on 3/30/16.
@@ -8,7 +8,8 @@
 
 import Foundation
 
-class ElectricalEngineering {
+class ComputerEngineering {
+    
     var majorFlow: Dictionary<String, Class> = Dictionary<String, Class>()
     var classArray = [Class]()
     
@@ -44,20 +45,30 @@ class ElectricalEngineering {
         majorFlow["MATH 3120"] = math3120
         classArray.append(math3120)
         
-        // MATH 3242
-        let math3242 = Class(className: "Linear Algebra", classDept: "MATH", classID: 3242, prereq1: math2110)
-        majorFlow["MATH 3242"] = math3242
-        classArray.append(math3242)
-        
-        // MATH 4614
-        let math4614 = Class(className: "Probability/Statistics", classDept: "MATH", classID: 4614, prereq1: math2110)
-        majorFlow["MATH 4614"] = math4614
-        classArray.append(math4614)
-        
         // COMP 1900
         let comp1900 = Class(className: "Intro to CS", classDept: "COMP", classID: 1900)
         majorFlow["COMP 1900"] = comp1900
         classArray.append(comp1900)
+        
+        // COMP 2150
+        let comp2150 = Class(className: "CS2: Data Structures", classDept: "COMP", classID: 2150, prereq1: comp1900)
+        majorFlow["COMP 2150"] = comp2150
+        classArray.append(comp2150)
+        
+        // COMP 2700
+        let comp2700 = Class(className: "CS2: Data Structures", classDept: "COMP", classID: 2700, prereq1: comp2150, prereq2: math1910)
+        majorFlow["COMP 2700"] = comp2700
+        classArray.append(comp2700)
+        
+        // MATH 3242
+        let math3242 = Class(className: "Linear Algebra", classDept: "MATH", classID: 3242, prereq1: math1920, prereq2: comp2700)
+        majorFlow["MATH 3242"] = math3242
+        classArray.append(math3242)
+        
+        // MATH 4614
+        let math4614 = Class(className: "Probability/Statistics", classDept: "MATH", classID: 4614, prereq1: math1920, prereq2: comp2700)
+        majorFlow["MATH 4614"] = math4614
+        classArray.append(math4614)
         
         // PHYS 2110
         let phys2110 = Class(className: "Engineering Physics I", classDept: "PHYS", classID: 2110, prereq1: math1910)
@@ -90,7 +101,7 @@ class ElectricalEngineering {
         classArray.append(eece2222)
         
         // EECE 3201
-        let eece3201 = Class(className: "Circuit Analysis II", classDept: "EECE", classID: 3201, prereq1: eece2201, prereq2: math3120)
+        let eece3201 = Class(className: "Circuit Analysis II", classDept: "EECE", classID: 3201, prereq1: eece2201, prereq2: eece2207, prereq3: math3120)
         majorFlow["EECE 3201"] = eece3201
         classArray.append(eece3201)
         
@@ -124,6 +135,11 @@ class ElectricalEngineering {
         majorFlow["EECE 4201"] = eece4201
         classArray.append(eece4201)
         
+        // EECE 4278
+        let eece4278 = Class(className: "Computer Organization", classDept: "EECE", classID: 4278, prereq1: eece3270)
+        majorFlow["EECE 4278"] = eece4278
+        classArray.append(eece4278)
+        
         // EECE 4279
         let eece4279 = Class(className: "Professional Development", classDept: "EECE", classID: 4279, prereq1: eece3270, prereq2: eece3211, prereq3: eece3201)
         majorFlow["EECE 4279"] = eece4279
@@ -138,5 +154,10 @@ class ElectricalEngineering {
         let eece4280 = Class(className: "Senior Design", classDept: "EECE", classID: 4280, prereq1: eece4279, prereq2: eece3204, prereq3: eece4991)
         majorFlow["EECE 4280"] = eece4280
         classArray.append(eece4280)
+        
+        // COMP 4270
+        let comp4270 = Class(className: "Operating Systems", classDept: "COMP", classID: 4270, prereq1: comp2150, prereq2: eece4278)
+        majorFlow["COMP 4270"] = comp4270
+        classArray.append(comp4270)
     }
 }

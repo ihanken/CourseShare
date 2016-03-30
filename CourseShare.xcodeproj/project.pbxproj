@@ -19,6 +19,7 @@
 		85A874451C6266B800C892FF /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A874441C6266B800C892FF /* HomeModel.swift */; };
 		85A874471C6266E100C892FF /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A874461C6266E100C892FF /* Student.swift */; };
 		85B5BE011CAC1BB6001AD1C0 /* ElectricalEngineering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B5BE001CAC1BB6001AD1C0 /* ElectricalEngineering.swift */; };
+		85B5BE031CAC7147001AD1C0 /* ComputerEngineering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B5BE021CAC7147001AD1C0 /* ComputerEngineering.swift */; };
 		85EBB62A1C82871700D03644 /* StudentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EBB6291C82871700D03644 /* StudentInfoViewController.swift */; };
 		85F1AA971C62C8540095C96B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 85F1AA961C62C8540095C96B /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
@@ -38,6 +39,7 @@
 		85A874441C6266B800C892FF /* HomeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
 		85A874461C6266E100C892FF /* Student.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		85B5BE001CAC1BB6001AD1C0 /* ElectricalEngineering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElectricalEngineering.swift; sourceTree = "<group>"; };
+		85B5BE021CAC7147001AD1C0 /* ComputerEngineering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComputerEngineering.swift; sourceTree = "<group>"; };
 		85EBB6291C82871700D03644 /* StudentInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInfoViewController.swift; sourceTree = "<group>"; };
 		85F1AA961C62C8540095C96B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -112,6 +114,7 @@
 				853416E91C7E0A03000A1974 /* Class.swift */,
 				853416EB1C7E0C62000A1974 /* ComputerScience.swift */,
 				85B5BE001CAC1BB6001AD1C0 /* ElectricalEngineering.swift */,
+				85B5BE021CAC7147001AD1C0 /* ComputerEngineering.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 				853416F01C7E6E24000A1974 /* ClassCell.swift in Sources */,
 				85A8742F1C62656300C892FF /* AppDelegate.swift in Sources */,
 				85B5BE011CAC1BB6001AD1C0 /* ElectricalEngineering.swift in Sources */,
+				85B5BE031CAC7147001AD1C0 /* ComputerEngineering.swift in Sources */,
 				85A874451C6266B800C892FF /* HomeModel.swift in Sources */,
 				853416EC1C7E0C62000A1974 /* ComputerScience.swift in Sources */,
 				85A874471C6266E100C892FF /* Student.swift in Sources */,
