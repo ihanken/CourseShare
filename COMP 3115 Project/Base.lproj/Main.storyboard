@@ -113,6 +113,7 @@
                     <connections>
                         <outlet property="newUserButton" destination="zXV-eP-3ea" id="vx8-O4-emZ"/>
                         <outlet property="tableView" destination="rJZ-cp-345" id="99K-p5-28E"/>
+                        <segue destination="3mf-KV-X4H" kind="show" identifier="classSelectionFromMain" id="LIs-f4-Bxk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -680,4 +681,7 @@
             <point key="canvasLocation" x="3001" y="85.5"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="LIs-f4-Bxk"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -83,7 +83,8 @@ class ClassSelectionViewController: UITableViewController, ClassCellDelegate,Hom
             classArray = ComputerScience().classArray
         }
         else if toPass[2] == "Computer Engineering" {
-            
+            classes = ComputerEngineering().majorFlow
+            classArray = ComputerEngineering().classArray
         }
         else {
             classes = ElectricalEngineering().majorFlow

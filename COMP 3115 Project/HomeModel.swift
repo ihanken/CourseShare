@@ -59,10 +59,10 @@ class HomeModel: NSObject, HomeModelProtocol, NSURLConnectionDataDelegate {
                         
                         // Create a new location object and set its properties to JsonElement properties.
                         let newStudent = Student();
-                        newStudent.name = jsonElement["Name"] as! NSString
-                        newStudent.year = jsonElement["Year"] as! NSString
-                        newStudent.majors = jsonElement["Majors"] as! NSString
-                        newStudent.progression = jsonElement["Progression"] as! NSString
+                        newStudent.name = jsonElement["name"] as! NSString
+                        newStudent.year = jsonElement["year"] as! NSString
+                        newStudent.majors = jsonElement["majors"] as! NSString
+                        newStudent.progression = jsonElement["progression"] as! NSString
                         
                         // Add this student to the locations array.
                         students.addObject(newStudent)

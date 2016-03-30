@@ -13,6 +13,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var feedItems = NSArray()
     var homeModel = HomeModel()
     
+    var cellIndex: Int?
+    
     @IBAction func unwindToMainViewController (sender: UIStoryboardSegue){
         
     }
@@ -59,6 +61,11 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return feedItems.count
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        cellIndex = indexPath.row
+        self.performSegueWithIdentifier("classSelectionFromMain", sender: self)
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Retrieve cell
         let cellIdentifier = "TestCell"
@@ -72,6 +79,16 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         myCell.detailTextLabel!.text = "\(item.year) in \(item.majors)"
         
         return myCell
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "classSelectionFromMain" {
+            let csvc = segue.destinationViewController as! ClassSelectionViewController
+            print(cellIndex!)
+            let item = feedItems[cellIndex!] as! Student
+            
+            csvc.toPass = ["\(item.name)", "\(item.year)", "\(item.majors)", "\(item.progression)"]
+        }
     }
 
     override func didReceiveMemoryWarning() {
