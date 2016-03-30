@@ -24,6 +24,14 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBAction func newUserButtonPressed(sender: AnyObject) {
     }
     
+    override func viewDidAppear(animated: Bool) {
+        // Set this view controller object as the delegate for the home model object
+        homeModel.delegate = self
+        
+        // Call the download items method of the home model object
+        homeModel.downloadItems()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
