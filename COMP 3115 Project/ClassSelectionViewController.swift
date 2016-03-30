@@ -18,6 +18,8 @@ class ClassSelectionViewController: UITableViewController, ClassCellDelegate,Hom
     var feedItems = NSArray()
     var homeModel = HomeModel()
     
+    var toPass = [String]()
+    
     @IBAction func createUserButtonPressed(sender: AnyObject) {
         let url = NSURL(string: "http://localhost/~ihanken/phpWrite.php")
         let urlRequest = NSMutableURLRequest(URL: url!)
@@ -54,10 +56,8 @@ class ClassSelectionViewController: UITableViewController, ClassCellDelegate,Hom
         dataTask.resume()
     }
     
-    var toPass = [String]()
-    
-    var classes = ComputerScience().majorFlow
-    var classArray = ComputerScience().classArray
+    var classes = Dictionary<String, Class>()
+    var classArray = [Class]()
     
     var classesSelected = [Class]()
     
@@ -78,6 +78,18 @@ class ClassSelectionViewController: UITableViewController, ClassCellDelegate,Hom
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if toPass[2] == "Computer Science" {
+            classes = ComputerScience().majorFlow
+            classArray = ComputerScience().classArray
+        }
+        else if toPass[2] == "Computer Engineering" {
+            
+        }
+        else {
+            classes = ElectricalEngineering().majorFlow
+            classArray = ElectricalEngineering().classArray
+        }
+        
         self.classTable.contentInset = UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0);
         
         print(toPass)
@@ -86,11 +98,10 @@ class ClassSelectionViewController: UITableViewController, ClassCellDelegate,Hom
     func itemsDownloaded(items: NSArray) {
         // This delegate method will get called when the items are finished downloading
         
-        // Set the downloaded items to the array
-        self.feedItems = items
-        
         // Reload the table view
         dispatch_async(dispatch_get_main_queue()) {
+            // Set the downloaded items to the array
+            self.feedItems = items
             self.tableView.reloadData()
         }
     }

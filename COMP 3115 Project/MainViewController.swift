@@ -29,6 +29,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         homeModel.delegate = self
         
         // Call the download items method of the home model object
+        print("Downloading items")
         homeModel.downloadItems()
     }
     
@@ -38,12 +39,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Set this view controller object as the delegate and data source for the table view
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
-        // Set this view controller object as the delegate for the home model object
-        homeModel.delegate = self
-        
-        // Call the download items method of the home model object
-        homeModel.downloadItems()
     }
     
     func itemsDownloaded(items: NSArray) {
@@ -54,6 +49,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         // Reload the table view
         dispatch_async(dispatch_get_main_queue()) {
+            print("Reloading the table.")
+            self.tableView.numberOfRowsInSection(items.count)
             self.tableView.reloadData()
         }
     }

@@ -47,7 +47,9 @@ class Class: CustomStringConvertible {
         }
     }
     
-    // Initializer
+    // MARK: Class Initializers
+    
+    // No prereqs
     init(className: String, classDept: String, classID: Int) {
         self.className = className
         self.classDept = classDept
@@ -60,6 +62,59 @@ class Class: CustomStringConvertible {
         self.prereq5 = nil
     }
     
+    // One prereq
+    init(className: String, classDept: String, classID: Int, prereq1: Class?) {
+        self.className = className
+        self.classDept = classDept
+        self.classID = classID
+        self.selected = false
+        self.prereq1 = prereq1
+        self.prereq2 = nil
+        self.prereq3 = nil
+        self.prereq4 = nil
+        self.prereq5 = nil
+    }
+    
+    // Two prereqs
+    init(className: String, classDept: String, classID: Int, prereq1: Class?, prereq2: Class?) {
+        self.className = className
+        self.classDept = classDept
+        self.classID = classID
+        self.selected = false
+        self.prereq1 = prereq1
+        self.prereq2 = prereq2
+        self.prereq3 = nil
+        self.prereq4 = nil
+        self.prereq5 = nil
+    }
+    
+    // Three prereqs
+    init(className: String, classDept: String, classID: Int, prereq1: Class?, prereq2: Class?, prereq3: Class?) {
+        self.className = className
+        self.classDept = classDept
+        self.classID = classID
+        self.selected = false
+        self.prereq1 = prereq1
+        self.prereq2 = prereq2
+        self.prereq3 = prereq3
+        self.prereq4 = nil
+        self.prereq5 = nil
+    }
+    
+    // Four prereqs
+    init(className: String, classDept: String, classID: Int, prereq1: Class?, prereq2: Class?, prereq3: Class?, prereq4: Class?) {
+        self.className = className
+        self.classDept = classDept
+        self.classID = classID
+        self.selected = false
+        self.prereq1 = prereq1
+        self.prereq2 = prereq2
+        self.prereq3 = prereq3
+        self.prereq4 = prereq4
+        self.prereq5 = nil
+    }
+    
+    // Five prereqs
     init(className: String, classDept: String, classID: Int, prereq1: Class?, prereq2: Class?, prereq3: Class?, prereq4: Class?, prereq5: Class?) {
         self.className = className
         self.classDept = classDept
