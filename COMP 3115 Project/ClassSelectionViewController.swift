@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class ClassSelectionViewController: UITableViewController, ClassCellDelegate,HomeModelProtocol {
+class ClassSelectionViewController: UITableViewController, ClassCellDelegate, HomeModelProtocol {
     
     @IBOutlet var classTable: UITableView!
     
@@ -19,41 +19,85 @@ class ClassSelectionViewController: UITableViewController, ClassCellDelegate,Hom
     var homeModel = HomeModel()
     
     var toPass = [String]()
+    var student: Student?
     
     @IBAction func createUserButtonPressed(sender: AnyObject) {
-        let url = NSURL(string: "http://localhost/~ihanken/phpWrite.php")
-        let urlRequest = NSMutableURLRequest(URL: url!)
-        urlRequest.HTTPMethod = "POST"
-        
-        let noteDataString = NSString(format: "name=%@&year=%@&majors=%@&progression=%@", toPass[0], toPass[1], toPass[2], classesSelected.description)
-        urlRequest.HTTPBody = noteDataString.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        let defaultSession = NSURLSession.sharedSession()
-        
-        let dataTask = defaultSession.dataTaskWithRequest(urlRequest, completionHandler: {(data, response, error) in
+        if student == nil {
+            let url = NSURL(string: "http://localhost/~ihanken/phpWrite.php")
+            let urlRequest = NSMutableURLRequest(URL: url!)
+            urlRequest.HTTPMethod = "POST"
             
-            var json: NSDictionary
+            let noteDataString = NSString(format: "name=%@&year=%@&majors=%@&progression=%@", toPass[0], toPass[1], toPass[2], classesSelected.description)
+            urlRequest.HTTPBody = noteDataString.dataUsingEncoding(NSUTF8StringEncoding)
             
-            do {
-                json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
-                let status = json["status"] as! NSString
+            let defaultSession = NSURLSession.sharedSession()
+            
+            let dataTask = defaultSession.dataTaskWithRequest(urlRequest, completionHandler: {(data, response, error) in
                 
-                if status == "1" {
-                    // Reload the table view
-                    self.homeModel.downloadItems()
+                print(data!)
+                
+                var json: NSDictionary
+                
+                do {
+                    json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
+                    let status = json["status"] as! NSString
+                    
+                    if status == "1" {
+                        // Reload the table view
+                        self.homeModel.downloadItems()
+                    }
+                    else {
+                        print("Error when trying to write.")
+                    }
                 }
-                else {
-                    print("Error when trying to write.")
+                catch {
+                    print("This is the caught error")
+                    print("Error: \(error)")
                 }
-            }
-            catch {
-                print("This is the caught error")
-                print("Error: \(error)")
-            }
+                
+            });
             
-        });
-        
-        dataTask.resume()
+            dataTask.resume()
+        }
+        else {
+            let url = NSURL(string: "http://localhost/~ihanken/phpUpdate.php")
+            let urlRequest = NSMutableURLRequest(URL: url!)
+            urlRequest.HTTPMethod = "POST"
+            
+            print(student!.id)
+            
+            let noteDataString = NSString(format: "student_id=%@&progression=%@", "\(student!.id)", classesSelected.description)
+            urlRequest.HTTPBody = noteDataString.dataUsingEncoding(NSUTF8StringEncoding)
+            
+            let defaultSession = NSURLSession.sharedSession()
+            
+            let dataTask = defaultSession.dataTaskWithRequest(urlRequest, completionHandler: {(data, response, error) in
+                
+                print(data!)
+                
+                var json: NSDictionary
+                
+                do {
+                    json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
+                    let status = json["status"] as! NSString
+                    
+                    if status == "1" {
+                        // Reload the table view
+                        self.homeModel.downloadItems()
+                    }
+                    else {
+                        print("Error when trying to write.")
+                    }
+                }
+                catch {
+                    print("This is the caught error")
+                    print("Error: \(error)")
+                }
+                
+            });
+            
+            dataTask.resume()
+        }
     }
     
     var classes = Dictionary<String, Class>()
@@ -93,7 +137,7 @@ class ClassSelectionViewController: UITableViewController, ClassCellDelegate,Hom
         
         self.classTable.contentInset = UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0);
         
-        print(toPass)
+        //toPass.removeAtIndex(3)
     }
     
     func itemsDownloaded(items: NSArray) {
@@ -119,13 +163,21 @@ class ClassSelectionViewController: UITableViewController, ClassCellDelegate,Hom
         
         let cell = self.classTable.dequeueReusableCellWithIdentifier("classCell") as! ClassCell
         
+        // Rotate the switch 180 degrees.
         cell.classSwitch.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
         
         cell.className.text = classArray[indexPath.row].className
         cell.classID.text = "\(classArray[indexPath.row].classDept) \(classArray[indexPath.row].classID)"
+        if toPass.count >= 4 {
+            if toPass[3].rangeOfString(cell.classID.text!) != nil {
+                cell.classSwitch.setOn(true, animated: false)
+                classArray[indexPath.row].selected = true
+                toPass[3] = toPass[3].stringByReplacingOccurrencesOfString(cell.classID.text!, withString: "")
+            }
+        }
         cell.classSwitch.setOn(classArray[indexPath.row].selected, animated: false)
         
-        if classArray[indexPath.row].selected == true {
+        if cell.classSwitch.on == true {
             classesSelected.append(classArray[indexPath.row])
         }
         

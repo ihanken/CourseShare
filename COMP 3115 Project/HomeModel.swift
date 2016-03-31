@@ -59,6 +59,7 @@ class HomeModel: NSObject, HomeModelProtocol, NSURLConnectionDataDelegate {
                         
                         // Create a new location object and set its properties to JsonElement properties.
                         let newStudent = Student();
+                        newStudent.id = (jsonElement["student_id"] as! NSString).integerValue
                         newStudent.name = jsonElement["name"] as! NSString
                         newStudent.year = jsonElement["year"] as! NSString
                         newStudent.majors = jsonElement["majors"] as! NSString
@@ -110,6 +111,7 @@ class HomeModel: NSObject, HomeModelProtocol, NSURLConnectionDataDelegate {
             
             // Create a new location object and set its props to JsonElement properties
             let newStudent = Student();
+            newStudent.id = (jsonElement["student_id"] as! NSString).integerValue
             newStudent.name = jsonElement["Name"] as! NSString
             newStudent.year = jsonElement["Year"] as! NSString
             newStudent.majors = jsonElement["Majors"] as! NSString

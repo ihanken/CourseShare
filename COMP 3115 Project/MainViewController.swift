@@ -84,10 +84,11 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "classSelectionFromMain" {
             let csvc = segue.destinationViewController as! ClassSelectionViewController
-            print(cellIndex!)
             let item = feedItems[cellIndex!] as! Student
             
             csvc.toPass = ["\(item.name)", "\(item.year)", "\(item.majors)", "\(item.progression)"]
+            csvc.student = item
+            //csvc.createUserButton.setTitle("Update User", forState: .Normal)
         }
     }
 
