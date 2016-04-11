@@ -11,9 +11,7 @@
 		853416EC1C7E0C62000A1974 /* ComputerScience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853416EB1C7E0C62000A1974 /* ComputerScience.swift */; };
 		853416F01C7E6E24000A1974 /* ClassCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853416EF1C7E6E24000A1974 /* ClassCell.swift */; };
 		853416F21C7E6F3F000A1974 /* ClassSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853416F11C7E6F3F000A1974 /* ClassSelectionViewController.swift */; };
-		8559E7181CB81844004FC128 /* phpUpdate.php in Resources */ = {isa = PBXBuildFile; fileRef = 8559E7151CB81844004FC128 /* phpUpdate.php */; };
-		8559E7191CB81844004FC128 /* phpWrite.php in Resources */ = {isa = PBXBuildFile; fileRef = 8559E7161CB81844004FC128 /* phpWrite.php */; };
-		8559E71A1CB81844004FC128 /* service.php in Resources */ = {isa = PBXBuildFile; fileRef = 8559E7171CB81844004FC128 /* service.php */; };
+		857B95F61CBB2C1B000520F3 /* StudentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857B95F51CBB2C1B000520F3 /* StudentCell.swift */; };
 		85A8742F1C62656300C892FF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A8742E1C62656300C892FF /* AppDelegate.swift */; };
 		85A874311C62656300C892FF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A874301C62656300C892FF /* MainViewController.swift */; };
 		85A874341C62656300C892FF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85A874321C62656300C892FF /* Main.storyboard */; };
@@ -32,9 +30,7 @@
 		853416EB1C7E0C62000A1974 /* ComputerScience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComputerScience.swift; sourceTree = "<group>"; };
 		853416EF1C7E6E24000A1974 /* ClassCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassCell.swift; sourceTree = "<group>"; };
 		853416F11C7E6F3F000A1974 /* ClassSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassSelectionViewController.swift; sourceTree = "<group>"; };
-		8559E7151CB81844004FC128 /* phpUpdate.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = phpUpdate.php; sourceTree = "<group>"; };
-		8559E7161CB81844004FC128 /* phpWrite.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = phpWrite.php; sourceTree = "<group>"; };
-		8559E7171CB81844004FC128 /* service.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = service.php; sourceTree = "<group>"; };
+		857B95F51CBB2C1B000520F3 /* StudentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentCell.swift; sourceTree = "<group>"; };
 		85A8742B1C62656300C892FF /* CourseShare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CourseShare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85A8742E1C62656300C892FF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85A874301C62656300C892FF /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -75,18 +71,9 @@
 			isa = PBXGroup;
 			children = (
 				853416EF1C7E6E24000A1974 /* ClassCell.swift */,
+				857B95F51CBB2C1B000520F3 /* StudentCell.swift */,
 			);
 			name = Cells;
-			sourceTree = "<group>";
-		};
-		8559E71B1CB8184F004FC128 /* PHP Scripts */ = {
-			isa = PBXGroup;
-			children = (
-				8559E7151CB81844004FC128 /* phpUpdate.php */,
-				8559E7161CB81844004FC128 /* phpWrite.php */,
-				8559E7171CB81844004FC128 /* service.php */,
-			);
-			name = "PHP Scripts";
 			sourceTree = "<group>";
 		};
 		85A874221C62656300C892FF = {
@@ -109,7 +96,6 @@
 		85A8742D1C62656300C892FF /* CourseShare */ = {
 			isa = PBXGroup;
 			children = (
-				8559E71B1CB8184F004FC128 /* PHP Scripts */,
 				85A874431C62667300C892FF /* Controller */,
 				85A874421C62666E00C892FF /* View */,
 				85A874401C62665700C892FF /* Model */,
@@ -210,13 +196,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8559E7181CB81844004FC128 /* phpUpdate.php in Resources */,
-				8559E71A1CB81844004FC128 /* service.php in Resources */,
 				85A874391C62656300C892FF /* LaunchScreen.storyboard in Resources */,
 				85F1AA971C62C8540095C96B /* Default-568h@2x.png in Resources */,
 				85A874361C62656300C892FF /* Assets.xcassets in Resources */,
 				85A874341C62656300C892FF /* Main.storyboard in Resources */,
-				8559E7191CB81844004FC128 /* phpWrite.php in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,6 +213,7 @@
 				85EBB62A1C82871700D03644 /* StudentInfoViewController.swift in Sources */,
 				853416F21C7E6F3F000A1974 /* ClassSelectionViewController.swift in Sources */,
 				85A874311C62656300C892FF /* MainViewController.swift in Sources */,
+				857B95F61CBB2C1B000520F3 /* StudentCell.swift in Sources */,
 				853416F01C7E6E24000A1974 /* ClassCell.swift in Sources */,
 				85A8742F1C62656300C892FF /* AppDelegate.swift in Sources */,
 				85B5BE011CAC1BB6001AD1C0 /* ElectricalEngineering.swift in Sources */,

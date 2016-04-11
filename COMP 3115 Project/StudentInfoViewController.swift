@@ -32,6 +32,10 @@ class StudentInfoViewController: UIViewController, UIPickerViewDataSource, UIPic
     
     var majorPickerDataSource = ["Computer Science", "Computer Engineering", "Electrical Engineering"]
     
+    @IBAction func unwindToStudentInfoViewController (sender: UIStoryboardSegue){
+        
+    }
+    
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return true }
         let newLength = text.characters.count + string.characters.count - range.length

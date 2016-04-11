@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-class ClassSelectionViewController: UITableViewController, ClassCellDelegate, HomeModelProtocol {
+class ClassSelectionViewController: UIViewController, ClassCellDelegate, HomeModelProtocol {
     
     @IBOutlet var classTable: UITableView!
     
     @IBOutlet weak var createUserButton: UIButton!
     
-    var feedItems = NSArray()
+    var feedItems = NSMutableArray()
     var homeModel = HomeModel()
     
     var toPass = [String]()
@@ -23,7 +23,7 @@ class ClassSelectionViewController: UITableViewController, ClassCellDelegate, Ho
     
     @IBAction func createUserButtonPressed(sender: AnyObject) {
         if student == nil {
-            let url = NSURL(string: "http://localhost/~ihanken/phpWrite.php")
+            let url = NSURL(string: "http://cs3115.drajn.com/~ishanken/phpWrite.php")
             let urlRequest = NSMutableURLRequest(URL: url!)
             urlRequest.HTTPMethod = "POST"
             
@@ -60,13 +60,14 @@ class ClassSelectionViewController: UITableViewController, ClassCellDelegate, Ho
             dataTask.resume()
         }
         else {
-            let url = NSURL(string: "http://localhost/~ihanken/phpUpdate.php")
+            let url = NSURL(string: "http://cs3115.drajn.com/~ishanken/phpUpdate.php")
             let urlRequest = NSMutableURLRequest(URL: url!)
             urlRequest.HTTPMethod = "POST"
             
             print(student!.id)
             
             let noteDataString = NSString(format: "student_id=%@&progression=%@", "\(student!.id)", classesSelected.description)
+            print(noteDataString)
             urlRequest.HTTPBody = noteDataString.dataUsingEncoding(NSUTF8StringEncoding)
             
             let defaultSession = NSURLSession.sharedSession()
@@ -106,13 +107,12 @@ class ClassSelectionViewController: UITableViewController, ClassCellDelegate, Ho
     var classesSelected = [Class]()
     
     @IBAction func handledSwitchChange(sender: UISwitch) {
-        //didChangeSwitchState(sender, isOn: sender.on)
         classTable.reloadData()
         classesSelected.removeAll()
     }
     
     func didChangeSwitchState(sender: ClassCell, isOn: Bool) {
-        let indexPath = self.tableView.indexPathForCell(sender)
+        let indexPath = self.classTable.indexPathForCell(sender)
         let index = indexPath!.row
         classArray[index].selected = isOn
         classTable.reloadData()
@@ -135,31 +135,33 @@ class ClassSelectionViewController: UITableViewController, ClassCellDelegate, Ho
             classArray = ElectricalEngineering().classArray
         }
         
-        self.classTable.contentInset = UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0);
-        
-        //toPass.removeAtIndex(3)
+        if self.student != nil {
+            createUserButton?.setTitle("Update User", forState: .Normal)
+        }
     }
     
-    func itemsDownloaded(items: NSArray) {
+    func itemsDownloaded(items: NSMutableArray) {
         // This delegate method will get called when the items are finished downloading
         
         // Reload the table view
         dispatch_async(dispatch_get_main_queue()) {
             // Set the downloaded items to the array
             self.feedItems = items
-            self.tableView.reloadData()
+            self.classTable.reloadData()
         }
     }
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+}
+
+extension ClassSelectionViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return classArray.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = self.classTable.dequeueReusableCellWithIdentifier("classCell") as! ClassCell
         

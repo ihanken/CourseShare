@@ -11,7 +11,7 @@
 import Foundation
 
 protocol HomeModelProtocol {
-    func itemsDownloaded(items: NSArray)
+    func itemsDownloaded(items: NSMutableArray)
 }
 
 class HomeModel: NSObject, HomeModelProtocol, NSURLConnectionDataDelegate {
@@ -20,7 +20,7 @@ class HomeModel: NSObject, HomeModelProtocol, NSURLConnectionDataDelegate {
     
     var delegate: HomeModelProtocol? = nil
     
-    func itemsDownloaded(items: NSArray) {
+    func itemsDownloaded(items: NSMutableArray) {
         // Must initialize function to adhere to protocol.
     }
     
@@ -29,7 +29,7 @@ class HomeModel: NSObject, HomeModelProtocol, NSURLConnectionDataDelegate {
         downloadedData = NSMutableData()
         
         // Download the json file.
-        let jsonFileUrl = NSURL(string: "http://localhost/~ihanken/service.php")
+        let jsonFileUrl = NSURL(string: "http://cs3115.drajn.com/~ishanken/service.php")
         
         let session = NSURLSession.sharedSession()
         
@@ -43,11 +43,11 @@ class HomeModel: NSObject, HomeModelProtocol, NSURLConnectionDataDelegate {
                     
                     // Create an array to store the locations
                     let students = NSMutableArray()
-                    var jsonArray: NSArray = NSArray()
+                    var jsonArray = NSMutableArray()
                     
                     // Parse the JSON that came in.
                     do {
-                        jsonArray = try NSJSONSerialization.JSONObjectWithData(self.downloadedData, options: NSJSONReadingOptions.AllowFragments) as! NSArray
+                        jsonArray = try NSJSONSerialization.JSONObjectWithData(self.downloadedData, options: NSJSONReadingOptions.AllowFragments) as! NSMutableArray
                     }
                     catch {
                         print("Error: \(error)")
@@ -95,11 +95,11 @@ class HomeModel: NSObject, HomeModelProtocol, NSURLConnectionDataDelegate {
         print("Got to function.")
         // Create an array to store the locations
         let students = NSMutableArray()
-        var jsonArray: NSArray = NSArray()
+        var jsonArray = NSMutableArray()
         
         // Parse the JSON that came in
         do {
-            jsonArray = try NSJSONSerialization.JSONObjectWithData(downloadedData, options: NSJSONReadingOptions.AllowFragments) as! NSArray
+            jsonArray = try NSJSONSerialization.JSONObjectWithData(downloadedData, options: NSJSONReadingOptions.AllowFragments) as! NSMutableArray
         }
         catch {
             print("Error: \(error)")
