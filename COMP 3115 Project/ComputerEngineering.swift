@@ -56,7 +56,7 @@ class ComputerEngineering {
         classArray.append(comp2150)
         
         // COMP 2700
-        let comp2700 = Class(className: "CS2: Data Structures", classDept: "COMP", classID: 2700, prereq1: comp2150, prereq2: math1910)
+        let comp2700 = Class(className: "Discrete Math", classDept: "COMP", classID: 2700, prereq1: comp2150, prereq2: math1910)
         majorFlow["COMP 2700"] = comp2700
         classArray.append(comp2700)
         

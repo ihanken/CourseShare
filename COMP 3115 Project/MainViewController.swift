@@ -8,15 +8,26 @@
 
 import UIKit
 
+// String extension so I can filter a JSON encoded string into a normal string.
+
+extension String {
+    func removeCharsFromString(text: String) -> String {
+        let okayChars : Set<Character> =
+            Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890+-*=(),.:!_".characters)
+        return String(text.characters.filter {okayChars.contains($0) })
+    }
+}
+
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, HomeModelProtocol {
     
     var feedItems = NSMutableArray()
     var homeModel = HomeModel()
+    var studentItems = [Student]()
     
     var cellIndex: Int?
     
-    @IBAction func unwindToMainViewController (sender: UIStoryboardSegue){
-        
+    @IBAction func unwindToMainViewController (sender: UIStoryboardSegue) {
+        // Pop view controllers off of the stack until the MainViewController is reached.
     }
 
     @IBOutlet weak var tableView: UITableView!
@@ -24,6 +35,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var newUserButton: UIButton!
     
     @IBAction func newUserButtonPressed(sender: AnyObject) {
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -49,6 +61,14 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Set the downloaded items to the array
         self.feedItems = items
         
+        // Make this an array of students for sorting purposes.
+        
+        studentItems.removeAll()
+        for i in 0..<feedItems.count {
+            studentItems.append(feedItems[i] as! Student)
+        }
+        studentItems = sortStudents(studentItems)
+        
         // Reload the table view
         dispatch_async(dispatch_get_main_queue()) {
             print("Reloading the table.")
@@ -57,57 +77,75 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
+    func getStudentName(student: Student) -> String {
+        // Used to grab a student's name for comparison within a sort closure.
+        return student.name as String
+    }
+    
+    func sortStudents(students: [Student]) -> [Student] {
+        var sortedStudents: [Student]
+        
+        // Only attempt to sort if there is more than one student.
+        if students.count > 1 {
+            sortedStudents = students.sort({getStudentName($0) < getStudentName($1)})
+        }
+        else {
+            sortedStudents = students
+        }
+        return sortedStudents
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return feedItems.count
+        return studentItems.count
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("Row \(indexPath.row) selected")
         self.cellIndex = indexPath.row
         self.performSegueWithIdentifier("classSelectionFromMain", sender: self)
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        let url = NSURL(string: "http://cs3115.drajn.com/~ishanken/phpDelete.php")
-        let urlRequest = NSMutableURLRequest(URL: url!)
-        urlRequest.HTTPMethod = "POST"
-        
-        let noteDataString = NSString(format: "student_id=%@", "\((feedItems[indexPath.row] as! Student).id)")
-        print(noteDataString)
-        urlRequest.HTTPBody = noteDataString.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        let defaultSession = NSURLSession.sharedSession()
-        
-        let dataTask = defaultSession.dataTaskWithRequest(urlRequest, completionHandler: {(data, response, error) in
-            
-            print(data!)
-            
-            var json: NSDictionary
-            
-            do {
-                json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
-                let status = json["status"] as! NSString
-                
-                if status == "1" {
-                    // Reload the table view
-                    self.homeModel.downloadItems()
-                }
-                else {
-                    print("Error when trying to write.")
-                }
-            }
-            catch {
-                print("This is the caught error")
-                print("Error: \(error)")
-            }
-            
-        });
-        
-        dataTask.resume()
-        
-        feedItems.removeObjectAtIndex(indexPath.row)
+        // If the user presses delete, delete the database row and delete the entry in the feeditems array.
         if editingStyle == UITableViewCellEditingStyle.Delete {
+            let url = NSURL(string: "http://cs3115.drajn.com/~ishanken/phpDelete.php")
+            let urlRequest = NSMutableURLRequest(URL: url!)
+            urlRequest.HTTPMethod = "POST"
+            
+            let noteDataString = NSString(format: "student_id=%@", "\(studentItems[indexPath.row].id)")
+            print(noteDataString)
+            urlRequest.HTTPBody = noteDataString.dataUsingEncoding(NSUTF8StringEncoding)
+            
+            let defaultSession = NSURLSession.sharedSession()
+            
+            let dataTask = defaultSession.dataTaskWithRequest(urlRequest, completionHandler: {(data, response, error) in
+                
+                print(data!)
+                
+                var json: NSDictionary
+                
+                do {
+                    json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as! NSDictionary
+                    let status = json["status"] as! NSString
+                    
+                    if status == "1" {
+                        // Reload the table view
+                        self.homeModel.downloadItems()
+                    }
+                    else {
+                        print("Error when trying to write.")
+                    }
+                }
+                catch {
+                    print("This is the caught error")
+                    print("Error: \(error)")
+                }
+                
+            });
+            
+            dataTask.resume()
+            studentItems.removeAtIndex(indexPath.row)
+            
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
         }
     }
@@ -124,37 +162,23 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         
         // Get the location to be shown
-        let item: Student = feedItems[indexPath.row] as! Student
+        let item = studentItems[indexPath.row]
         
         // Get references to labels of cell
         myCell.name.text = item.name as String
-        myCell.subtitle.text = "\(item.year) in \(item.majors)"
+        myCell.subtitle.text = "\(item.year) in \(String().removeCharsFromString(item.majors.description))"
         
         return myCell
     }
     
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        if gestureRecognizer.view?.isKindOfClass(UITableViewCell) == true && ((gestureRecognizer as! UISwipeGestureRecognizer).direction == UISwipeGestureRecognizerDirection.Left || (gestureRecognizer as! UISwipeGestureRecognizer).direction == UISwipeGestureRecognizerDirection.Right) {
-            return true
-        }
-        return false
-    }
-    
-    func deleteCell(gestureRecognizer: UIGestureRecognizer) {
-        let swipeGestureRecognizer = gestureRecognizer as! UISwipeGestureRecognizer
-        let cell = swipeGestureRecognizer.view as! StudentCell
-        let tableView = cell.tableView
-        let indexPath = cell.indexPath
-    }
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "classSelectionFromMain" {
+            // When a user is selected, pass the class selection view controller all of the data needed.
             let csvc = segue.destinationViewController as! ClassSelectionViewController
-            print(cellIndex)
-            let item = feedItems[cellIndex!] as! Student
+            let item = studentItems[cellIndex!]
             csvc.toPass = ["\(item.name)", "\(item.year)", "\(item.majors)", "\(item.progression)"]
+            csvc.majorsSelected = "\(item.majors)".componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "\\[,]\"")).filter{ (($0 as String) != "" && ($0 as String) != " ")}.map{ ($0 as String) }
             csvc.student = item
-            //csvc.createUserButton.setTitle("Update User", forState: .Normal)
         }
     }
 

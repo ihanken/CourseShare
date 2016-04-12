@@ -9,6 +9,20 @@
 import Foundation
 import UIKit
 
+// An extension of Arrays that allows me to filter out duplicate classes.
+// This does require the equatable protocol in the class.
+extension Array where Element : Equatable {
+    var unique: [Element] {
+        var uniqueValues: [Element] = []
+        forEach { item in
+            if !uniqueValues.contains(item) {
+                uniqueValues += [item]
+            }
+        }
+        return uniqueValues
+    }
+}
+
 class ClassSelectionViewController: UIViewController, ClassCellDelegate, HomeModelProtocol {
     
     @IBOutlet var classTable: UITableView!
@@ -21,20 +35,22 @@ class ClassSelectionViewController: UIViewController, ClassCellDelegate, HomeMod
     var toPass = [String]()
     var student: Student?
     
+    @IBAction func unwindToClassSelectionViewController (sender: UIStoryboardSegue){
+        // Pop all view controllers off of the stack until this view controller is reached.
+    }
+    
     @IBAction func createUserButtonPressed(sender: AnyObject) {
         if student == nil {
             let url = NSURL(string: "http://cs3115.drajn.com/~ishanken/phpWrite.php")
             let urlRequest = NSMutableURLRequest(URL: url!)
             urlRequest.HTTPMethod = "POST"
             
-            let noteDataString = NSString(format: "name=%@&year=%@&majors=%@&progression=%@", toPass[0], toPass[1], toPass[2], classesSelected.description)
+            let noteDataString = NSString(format: "name=%@&year=%@&majors=%@&progression=%@", toPass[0], toPass[1], majorsSelected.description, classesSelected.description)
             urlRequest.HTTPBody = noteDataString.dataUsingEncoding(NSUTF8StringEncoding)
             
             let defaultSession = NSURLSession.sharedSession()
             
             let dataTask = defaultSession.dataTaskWithRequest(urlRequest, completionHandler: {(data, response, error) in
-                
-                print(data!)
                 
                 var json: NSDictionary
                 
@@ -74,8 +90,6 @@ class ClassSelectionViewController: UIViewController, ClassCellDelegate, HomeMod
             
             let dataTask = defaultSession.dataTaskWithRequest(urlRequest, completionHandler: {(data, response, error) in
                 
-                print(data!)
-                
                 var json: NSDictionary
                 
                 do {
@@ -105,39 +119,46 @@ class ClassSelectionViewController: UIViewController, ClassCellDelegate, HomeMod
     var classArray = [Class]()
     
     var classesSelected = [Class]()
-    
-    @IBAction func handledSwitchChange(sender: UISwitch) {
-        classTable.reloadData()
-        classesSelected.removeAll()
-    }
+    var majorsSelected = [String]()
     
     func didChangeSwitchState(sender: ClassCell, isOn: Bool) {
+        // When a switch is flipped, change the cell and the array of chosen classes.
         let indexPath = self.classTable.indexPathForCell(sender)
         let index = indexPath!.row
         classArray[index].selected = isOn
-        classTable.reloadData()
         classesSelected.removeAll()
+        for currentClass in classArray {
+            if currentClass.selected == true {
+                classesSelected.append(currentClass)
+            }
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if toPass[2] == "Computer Science" {
-            classes = ComputerScience().majorFlow
-            classArray = ComputerScience().classArray
-        }
-        else if toPass[2] == "Computer Engineering" {
-            classes = ComputerEngineering().majorFlow
-            classArray = ComputerEngineering().classArray
-        }
-        else {
-            classes = ElectricalEngineering().majorFlow
-            classArray = ElectricalEngineering().classArray
-        }
-        
+        // If a user is being updated, change he "Create User" button's text.
         if self.student != nil {
             createUserButton?.setTitle("Update User", forState: .Normal)
         }
+    }
+    
+    func sortClasses(classes: [Class]) -> [Class] {
+        var sortedClasses: [Class]
+        
+        // Sort classes alphabetically.
+        if classes.count > 1 {
+            sortedClasses = classes.sort({getClassID($0) < getClassID($1)})
+        }
+        else {
+            sortedClasses = classes
+        }
+        return sortedClasses
+    }
+    
+    func getClassID(currentClass: Class) -> String {
+        // Return a classes full ID. Used for sorting an array by ClassID within a closure.
+        return currentClass.classDept + "\(currentClass.classID)"
     }
     
     func itemsDownloaded(items: NSMutableArray) {
@@ -150,6 +171,17 @@ class ClassSelectionViewController: UIViewController, ClassCellDelegate, HomeMod
             self.classTable.reloadData()
         }
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "credentialsSegue" {
+            // When moving to the credentials screen, pass all relevant database information.
+            let cvc = segue.destinationViewController as! CredentialsViewController
+            cvc.student = student
+            cvc.toPass = toPass
+            cvc.majorsSelected = majorsSelected
+            cvc.classesSelected = classesSelected
+        }
+    }
 }
 
 extension ClassSelectionViewController: UITableViewDelegate, UITableViewDataSource {
@@ -158,6 +190,15 @@ extension ClassSelectionViewController: UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        for major in majorsSelected {
+            if major == "Computer Science" { classArray += ComputerScience().classArray }
+            if major == "Computer Engineering" { classArray += ComputerEngineering().classArray }
+            if major == "Electrical Engineering" { classArray += ElectricalEngineering().classArray }
+        }
+        
+        classArray = classArray.unique
+        classArray = sortClasses(classArray)
+        
         return classArray.count
     }
     

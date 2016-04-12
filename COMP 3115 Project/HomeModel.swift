@@ -63,7 +63,12 @@ class HomeModel: NSObject, HomeModelProtocol, NSURLConnectionDataDelegate {
                         newStudent.name = jsonElement["name"] as! NSString
                         newStudent.year = jsonElement["year"] as! NSString
                         newStudent.majors = jsonElement["majors"] as! NSString
-                        newStudent.progression = jsonElement["progression"] as! NSString
+                        if let progression = jsonElement["progression"] as? NSString {
+                            newStudent.progression = progression
+                        }
+                        else {
+                            newStudent.progression = ""
+                        }
                         
                         // Add this student to the locations array.
                         students.addObject(newStudent)

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Class: CustomStringConvertible {
+class Class: CustomStringConvertible, Equatable {
     // Class Identifiers
     let className: String
     let classDept: String
@@ -140,4 +140,8 @@ class Class: CustomStringConvertible {
         self.prereq5 = nil
     }
     
+}
+
+func ==(lhs: Class, rhs: Class) -> Bool {
+    return lhs.classID == rhs.classID && lhs.classDept == rhs.classDept
 }
