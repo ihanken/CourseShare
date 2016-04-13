@@ -36,7 +36,7 @@ class CredentialsViewController: UIViewController, UITextFieldDelegate, HomeMode
             let urlRequest = NSMutableURLRequest(URL: url!)
             urlRequest.HTTPMethod = "POST"
             
-            let noteDataString = NSString(format: "name=%@&year=%@&majors=%@&progression=%@&username=%@&password=%@", toPass[0], toPass[1], majorsSelected.description, classesSelected.description, username, password)
+            let noteDataString = NSString(format: "name=%@&year=%@&majors=%@&progression=%@&username=%@&password=%@", toPass[0], toPass[1], majorsSelected.description, classesSelected.description, usernameField.text!, passwordField.text!)
             urlRequest.HTTPBody = noteDataString.dataUsingEncoding(NSUTF8StringEncoding)
             
             let defaultSession = NSURLSession.sharedSession()
@@ -71,7 +71,7 @@ class CredentialsViewController: UIViewController, UITextFieldDelegate, HomeMode
             let urlRequest = NSMutableURLRequest(URL: url!)
             urlRequest.HTTPMethod = "POST"
             
-            let noteDataString = NSString(format: "student_id=%@&progression=%@&username=%@&password=%@", "\(student!.id)", classesSelected.description, username as String, password as String)
+            let noteDataString = NSString(format: "student_id=%@&progression=%@&username=%@&password=%@", "\(student!.id)", classesSelected.description, usernameField.text!, passwordField.text!)
             urlRequest.HTTPBody = noteDataString.dataUsingEncoding(NSUTF8StringEncoding)
             
             let defaultSession = NSURLSession.sharedSession()
@@ -125,9 +125,9 @@ class CredentialsViewController: UIViewController, UITextFieldDelegate, HomeMode
             textField.resignFirstResponder()
         }
         
-        // Update the username or password based on what the user enters into the fields.
-        if textField.tag == 1 { username = textField.text! }
-        else { password = textField.text! }
+        if usernameField.text != nil && passwordField.text != nil && usernameField.text != "" && passwordField.text != "" {
+            updateButton.enabled = true
+        }
         
         return true
     }

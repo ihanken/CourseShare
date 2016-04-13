@@ -79,7 +79,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func getStudentName(student: Student) -> String {
         // Used to grab a student's name for comparison within a sort closure.
-        return student.name as String
+        let fullName = student.name as String
+        let fullNameArr = fullName.characters.split{$0 == " "}.map(String.init)
+        return fullNameArr.last!
     }
     
     func sortStudents(students: [Student]) -> [Student] {

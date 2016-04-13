@@ -534,7 +534,7 @@
                                     <segue destination="DCj-Xn-3r6" kind="unwind" unwindAction="unwindToClassSelectionViewController:" id="1H5-4l-HE7"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2N7-bj-5ib">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2N7-bj-5ib">
                                 <rect key="frame" x="378" y="550" width="202" height="30"/>
                                 <state key="normal" title="Add Username and Password"/>
                                 <connections>
