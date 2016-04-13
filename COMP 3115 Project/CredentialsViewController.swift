@@ -112,6 +112,19 @@ class CredentialsViewController: UIViewController, UITextFieldDelegate, HomeMode
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
+        let nextTag = textField.tag + 1
+        // Try to find next responder
+        let nextResponder = textField.superview?.viewWithTag(nextTag) as UIResponder!
+        
+        if (nextResponder != nil) {
+            // Found next responder, so set it.
+            nextResponder?.becomeFirstResponder()
+        }
+        else {
+            // Not found, so remove keyboard
+            textField.resignFirstResponder()
+        }
+        
         // Update the username or password based on what the user enters into the fields.
         if textField.tag == 1 { username = textField.text! }
         else { password = textField.text! }

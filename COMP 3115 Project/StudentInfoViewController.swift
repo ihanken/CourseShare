@@ -87,6 +87,8 @@ class StudentInfoViewController: UIViewController, UIPickerViewDataSource, UIPic
         self.yearPicker.dataSource = self
         self.majorTableView.delegate = self
         self.majorTableView.dataSource = self
+        
+        nameField.autocapitalizationType = UITextAutocapitalizationType.Words
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
