@@ -44,9 +44,6 @@ class StudentInfoViewController: UIViewController, UIPickerViewDataSource, UIPic
     }
     
     func didChangeSwitchState(sender: MajorCell, isOn: Bool) {
-        let indexPath = self.majorTableView.indexPathForCell(sender)
-        let index = indexPath!.row
-        //majorPickerDataSource[index].selected = isOn
         majorsSelected.removeAll()
         majorTableView.reloadData()
     }
